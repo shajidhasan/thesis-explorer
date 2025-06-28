@@ -159,7 +159,7 @@
 					bind:value={searchQuery}
 					oninput={handleSearchInput}
 					type="search"
-					placeholder="Search CUET ME theses..."
+					placeholder="Search..."
 				/>
 				<button
 					type="button"
