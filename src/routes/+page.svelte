@@ -141,9 +141,15 @@
 	const handleSearchInput = () => {
 		currentPage = 1;
 	};
+
+	const handleTagClick = (tag: string) => {
+		addTag(tag);
+	};
 </script>
 
-<div class="sticky top-0 z-50 border-b border-zinc-800/50 bg-zinc-950/80 p-6 backdrop-blur-xl">
+<div
+	class="sticky top-0 z-50 border-b border-zinc-800/50 bg-zinc-950/80 p-4 backdrop-blur-xl md:p-6"
+>
 	<form class="mx-auto max-w-4xl" onsubmit={onSearch}>
 		<div class="group relative">
 			<div
@@ -151,11 +157,11 @@
 			></div>
 			<div class="relative">
 				<SearchIcon
-					size={20}
-					class="absolute top-1/2 left-5 z-10 -translate-y-1/2 transform text-zinc-400"
+					size={18}
+					class="absolute top-1/2 left-4 z-10 -translate-y-1/2 transform text-zinc-400 md:left-5 md:size-5"
 				/>
 				<input
-					class="h-14 w-full rounded-2xl border border-zinc-700/50 bg-zinc-900/80 pr-20 pl-14 text-lg text-zinc-100 placeholder-zinc-400 backdrop-blur-sm transition-all duration-300 focus:border-purple-500/50 focus:outline-none"
+					class="h-12 w-full rounded-2xl border border-zinc-700/50 bg-zinc-900/80 pr-16 pl-12 text-base text-zinc-100 placeholder-zinc-400 backdrop-blur-sm transition-all duration-300 focus:border-purple-500/50 focus:outline-none md:h-14 md:pr-20 md:pl-14 md:text-lg"
 					bind:value={searchQuery}
 					oninput={handleSearchInput}
 					type="search"
@@ -164,21 +170,21 @@
 				<button
 					type="button"
 					onclick={() => (showFilters = !showFilters)}
-					class="absolute top-1/2 right-4 -translate-y-1/2 transform rounded-lg p-2 transition-colors duration-200 hover:bg-zinc-800 {showFilters
+					class="absolute top-1/2 right-3 -translate-y-1/2 transform rounded-lg p-2 transition-colors duration-200 hover:bg-zinc-800 md:right-4 {showFilters
 						? 'text-purple-400'
 						: 'text-zinc-400'}"
 				>
-					<FilterIcon size={18} />
+					<FilterIcon size={16} class="md:size-[18px]" />
 				</button>
 			</div>
 		</div>
 
 		{#if showFilters}
-			<div class="space-y-4 pt-5" transition:slide={{ duration: 300 }}>
-				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+			<div class="space-y-4 pt-4 md:pt-5" transition:slide={{ duration: 300 }}>
+				<div class="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
 					<select
 						onchange={onTagSelect}
-						class="h-12 rounded-xl border border-zinc-700/30 bg-zinc-800/50 px-4 text-zinc-200 transition-all duration-200 focus:border-purple-500/50 focus:outline-none"
+						class="h-10 rounded-xl border border-zinc-700/30 bg-zinc-800/50 px-3 text-sm text-zinc-200 transition-all duration-200 focus:border-purple-500/50 focus:outline-none md:h-12 md:px-4 md:text-base"
 					>
 						<option class="bg-zinc-800" value="">Add tag filter...</option>
 						{#each tags as tag}
@@ -189,7 +195,7 @@
 					<select
 						onchange={onSupervisorSelect}
 						bind:value={searchSupervisor}
-						class="h-12 rounded-xl border border-zinc-700/30 bg-zinc-800/50 px-4 text-zinc-200 transition-all duration-200 focus:border-purple-500/50 focus:outline-none"
+						class="h-10 rounded-xl border border-zinc-700/30 bg-zinc-800/50 px-3 text-sm text-zinc-200 transition-all duration-200 focus:border-purple-500/50 focus:outline-none md:h-12 md:px-4 md:text-base"
 					>
 						<option class="bg-zinc-800" value="All">All Supervisors</option>
 						{#each supervisors as supervisor}
@@ -311,13 +317,14 @@
 							<div class="mt-4 flex flex-wrap gap-2">
 								{#each thesis.tags as tag}
 									{@const isSelected = searchTags.includes(tag)}
-									<span
+									<button
+										onclick={() => handleTagClick(tag)}
 										class="rounded-full border px-3 py-1 text-xs font-medium transition-all duration-200 {isSelected
 											? 'border-purple-500/40 bg-purple-500/20 text-purple-200'
-											: 'border-zinc-700/30 bg-zinc-800/50 text-zinc-300 hover:border-zinc-600/50 hover:bg-zinc-700/50'}"
+											: 'cursor-pointer border-zinc-700/30 bg-zinc-800/50 text-zinc-300 hover:border-zinc-600/50 hover:bg-zinc-700/50'}"
 									>
 										{tag}
-									</span>
+									</button>
 								{/each}
 							</div>
 						{/if}
